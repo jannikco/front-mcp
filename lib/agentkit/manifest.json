@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "version": "1.0.0",
+  "product": "pipmcp",
+  "credential": "PIPMCP_API_KEY",
+  "skills": [
+    {
+      "name": "pipmcp-front",
+      "description": "Connect AI agents to Front using one PipMCP API key and actual hosted tool discovery."
+    }
+  ],
+  "files": {
+    "skills/pipmcp-front/SKILL.md": "8ae173117d657bd4df7fd0cb9987e036e622b98d169516852bdc3ffa6cb2daef"
+  }
+}
