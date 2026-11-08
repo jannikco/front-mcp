@@ -1,0 +1,205 @@
+{
+  "id": "front",
+  "name": "Front",
+  "version": "0.1.0",
+  "baseUrl": "https://api2.frontapp.com",
+  "auth": {
+    "type": "bearer",
+    "env": "FRONT_API_TOKEN"
+  },
+  "tools": [
+    {
+      "name": "front_list_contacts",
+      "description": "Read one bounded page of contacts.",
+      "method": "GET",
+      "path": "/contacts",
+      "readOnly": true,
+      "approvalRequired": false,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "bindings": {
+        "path": [],
+        "query": {
+          "limit": "limit"
+        },
+        "body": {}
+      },
+      "sampleArguments": {
+        "limit": 10
+      },
+      "evidence": {
+        "state": "documented",
+        "providerLiveValidation": "not-run"
+      },
+      "provenance": [
+        "https://raw.githubusercontent.com/frontapp/front-api-specs/main/core-api/core-api.json"
+      ]
+    },
+    {
+      "name": "front_create_contact",
+      "description": "Create an email contact with explicit handles; no message is sent.",
+      "method": "POST",
+      "path": "/contacts",
+      "readOnly": false,
+      "approvalRequired": true,
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "handles": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "handle": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "source": {
+                  "type": "string",
+                  "enum": [
+                    "email"
+                  ]
+                }
+              },
+              "required": [
+                "handle",
+                "source"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 1
+          }
+        },
+        "required": [
+          "handles"
+        ],
+        "additionalProperties": false
+      },
+      "bindings": {
+        "path": [],
+        "query": {},
+        "body": {
+          "name": "name",
+          "handles": "handles"
+        }
+      },
+      "sampleArguments": {
+        "name": "Sandbox Example",
+        "handles": [
+          {
+            "handle": "sandbox@example.com",
+            "source": "email"
+          }
+        ]
+      },
+      "evidence": {
+        "state": "documented",
+        "providerLiveValidation": "not-run"
+      },
+      "provenance": [
+        "https://raw.githubusercontent.com/frontapp/front-api-specs/main/core-api/core-api.json"
+      ]
+    }
+  ],
+  "workflow": {
+    "name": "Front authorized workflow",
+    "description": "Find support contacts and explicitly add a new email contact without sending a message.",
+    "steps": [
+      "front_list_contacts",
+      "front_create_contact"
+    ]
+  },
+  "provenance": [
+    "https://raw.githubusercontent.com/frontapp/front-api-specs/main/core-api/core-api.json"
+  ],
+  "sourceEvidence": {
+    "state": "documented",
+    "providerLiveValidation": "not-run",
+    "checkedAt": "2026-11-08",
+    "operationCount": 2,
+    "kind": "official-reference",
+    "sha256": "dd0b45ae7f1a90ca0d9bd4df2323cf55cbdcbe409de4e7b52b911ee553deee9a",
+    "sources": [
+      {
+        "url": "https://raw.githubusercontent.com/frontapp/front-api-specs/main/core-api/core-api.json",
+        "sha256": "dd0b45ae7f1a90ca0d9bd4df2323cf55cbdcbe409de4e7b52b911ee553deee9a",
+        "checkedAt": "2026-11-08T13:11:28.098820+00:00"
+      }
+    ]
+  },
+  "setup": {
+    "requiresPipMcpAccount": false,
+    "credentialsHelpUrl": "https://raw.githubusercontent.com/frontapp/front-api-specs/main/core-api/core-api.json",
+    "instructions": "Use your own Front API token with contact read/write permissions. Contacts and handles must belong to authorized customer records. This connector does not send messages."
+  },
+  "sampleWarning": "Example IDs and email addresses are placeholders. Replace them with records and recipients you are authorized to access. Samples do not authorize writes. HTTP/fixture success does not prove provider execution or email delivery.",
+  "appSlug": "front",
+  "repoId": "front-mcp",
+  "product": "pipmcp",
+  "artifactType": "connector",
+  "sourceRevision": "c32cb0c89f40f162a1208d3e5ed5cc3958a8cdeb5832c5934fcb93ce4b374b85",
+  "capabilityEvidence": {
+    "local": {
+      "level": "Tested",
+      "operations": [
+        {
+          "name": "front_list_contacts",
+          "level": "Tested",
+          "evidenceRefs": [
+            "Provider request/stdio contract tests"
+          ],
+          "method": "contract-fixture"
+        },
+        {
+          "name": "front_create_contact",
+          "level": "Tested",
+          "evidenceRefs": [
+            "Provider request/stdio contract tests"
+          ],
+          "method": "contract-fixture"
+        }
+      ],
+      "evidenceRefs": [
+        "Provider request/stdio contract tests"
+      ],
+      "mode": "local"
+    },
+    "managed": {
+      "level": "Documented",
+      "operations": [
+        {
+          "name": "front_list_contacts",
+          "level": "Documented",
+          "evidenceRefs": [],
+          "method": "documentation"
+        },
+        {
+          "name": "front_create_contact",
+          "level": "Documented",
+          "evidenceRefs": [],
+          "method": "documentation"
+        }
+      ],
+      "evidenceRefs": [],
+      "mode": "managed"
+    }
+  },
+  "managedAvailability": {
+    "status": "listed",
+    "checkedAt": "2026-11-08T13:20:45.156456+00:00"
+  }
+}
